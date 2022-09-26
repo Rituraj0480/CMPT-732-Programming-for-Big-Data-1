@@ -1,0 +1,44 @@
+Answer 1: (Q: Are there any parts of the original WordCount that still confuse you? If so, what?)
+
+I am new to Java and Hadoop concepts - HDFS, MapReduce, and Yarn, so the assignment was quite challenging. I have a previous experience in C++, Python, and PL/SQL.
+I enjoyed learning the concepts and most of the doubts which I had were cleared by the given instructions and guidance from our Dear Instructors and TAs, and some internet articles about Hadoop and Java.
+
+
+
+
+Answer 2: (Q: How did the output change when you submitted with -D mapreduce.job.reduces=3? Why would this be necessary if your job produced large output sets?)
+
+When I submitted the '-D mapreduce.job.reduces=3' query, I received 3 different reducer outputs inside the final output directory.
+Without this query, I was getting only one output. The reason is because initially I was using only one reducer to produce the final output, thus limiting parallelization.
+Using multiple reducers is really necessary when my job produces large output sets, because using more than one reducers can decrease the workload of single reducer.
+Using more reducers also increases speed and decreases the total time taken, as each reducers have less data to process.
+
+Below is the output by using 1 Reducer:
+-rw-r--r--   2 roa11 supergroup          0 2022-09-16 13:16 output-1/_SUCCESS
+-rw-r--r--   2 roa11 supergroup     319553 2022-09-16 13:16 output-1/part-r-00000
+
+Below is the output files by using 3 Reducers:
+-rw-r--r--   2 roa11 supergroup          0 2022-09-16 13:20 output-2/_SUCCESS
+-rw-r--r--   2 roa11 supergroup     106909 2022-09-16 13:20 output-2/part-r-00000
+-rw-r--r--   2 roa11 supergroup     106932 2022-09-16 13:20 output-2/part-r-00001
+-rw-r--r--   2 roa11 supergroup     105712 2022-09-16 13:20 output-2/part-r-00002
+
+
+
+
+Answer 3: (Q: How was the -D mapreduce.job.reduces=0 output different?)
+
+I received the below output:
+-rw-r--r--   2 roa11 supergroup          0 2022-09-16 13:40 output-3/_SUCCESS
+-rw-r--r--   2 roa11 supergroup    1197116 2022-09-16 13:40 output-3/part-m-00000
+-rw-r--r--   2 roa11 supergroup     905534 2022-09-16 13:40 output-3/part-m-00001
+-rw-r--r--   2 roa11 supergroup     629947 2022-09-16 13:40 output-3/part-m-00002
+
+Using this query, we are getting outputs, containing m, directly from Mapper. Total 3 Map tasks were done to get these 3 outputs. Also, we will receive a lot of key/value pairs, since there is no Reducer to combine the final similar key/Values pairs.
+
+
+
+
+Answer 4: (Q: Was there any noticeable difference in the running time of your RedditAverage with and without the combiner optimization?)
+
+The work of the Combiner is to decrease the workload of Reducer, thus, with Combiner it took less time as compared to without it.
